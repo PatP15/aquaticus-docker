@@ -26,7 +26,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run the simulation with trained agents.")
     parser.add_argument('--color', required=True, choices=['red', 'blue'], help="Specify if red or blue team is the trained agent.")
     parser.add_argument('--policy-dir', required=True, help="Directory containing policy file.")
-     parser.add_argument('--boat', required=True, choices=['scott', 'thomas', 'ursula', 'valhalla', 'walter', 'xavier', 'yolanda', 'zach'], help="Specify the boat name.")
+    parser.add_argument('--boat', required=True, choices=['scott', 'thomas', 'ursula', 'valhalla', 'walter', 'xavier', 'yolanda', 'zach'], help="Specify the boat name.")
     parser.add_argument('--opp_boat', required=True, choices=['scott', 'thomas', 'ursula', 'valhalla', 'walter', 'xavier', 'yolanda', 'zach'], help="Specify the opponent boat name.")
     args = parser.parse_args()
 

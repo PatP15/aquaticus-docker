@@ -28,7 +28,7 @@ COPY logs logs
 COPY missions_pyquaticus missions_pyquaticus
 COPY requirements.txt requirements.txt
 
-RUN sudo chown -R moos:moos moos-ivp-rlagent logs pyquaticus moos-ivp missions_pyquaticus scripts missions_pyquaticus requirements.txt mdo-hurt-s
+RUN sudo chown -R moos:moos moos-ivp-rlagent logs pyquaticus moos-ivp missions_pyquaticus scripts missions_pyquaticus requirements.txt mdo-hurt-s submission
 
 ENV PATH=${PATH}:/home/moos/moos-ivp/bin:/home/moos/moos-ivp-aquaticus/bin:/home/moos/moos-ivp-rlagent/bin:/home/moos/pyquaticus/:/home/moos/scripts:/home/moos/mdo-hurt-s/moos-ivp-surveyor/bin \
 IVP_BEHAVIOR_DIRS=/home/moos/moos-ivp/lib:/home/moos/moos-ivp-aquaticus/lib:/home/moos/moos-ivp-rlagent/lib \

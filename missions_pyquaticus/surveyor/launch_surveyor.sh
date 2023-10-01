@@ -1,8 +1,7 @@
 #!/bin/bash
 TIME_WARP=1
 
-#SHORE_IP=192.168.1.252
-SHORE_IP=localhost
+SHORE_IP=192.168.1.252
 SHORE_LISTEN="9300"
 
 TRAIL_RANGE="3"
@@ -210,6 +209,7 @@ for arg in "${@:4}"; do
         echo "Just building files; no vehicle launch."
     elif [ "${arg}" = "--sim" -o "${arg}" = "-s" ] ; then
         SIM="SIM"
+        SHORE_IP=localhost
         echo "Simulation mode ON."
     elif [ "${arg:0:10}" = "--start-x=" ] ; then
         START_POS_X="${arg#--start-x=*}"
