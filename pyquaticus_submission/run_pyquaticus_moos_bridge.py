@@ -26,16 +26,17 @@ boat_ips = {
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Run the simulation with trained agents.")
-    parser.add_argument('--sim', required=True, choices=['true', 'false'], help="Specify if simulation or not.")
+    # parser.add_argument('--sim', required=True, choices=['true', 'false'], help="Specify if simulation or not.")
+    parser.add_argument('--sim', action='store_true', help="Specify if simulation or not.")
     parser.add_argument('--color', required=True, choices=['red', 'blue'], help="Specify if red or blue team is the trained agent.")
     parser.add_argument('--policy-dir', required=True, help="Directory containing policy file.")
-    parser.add_argument('--boat_id', required=True, choices=["blue_one", "blue_two", "red_one", "red_two"], help="Specify the boat name.")
+    parser.add_argument('--boat_id', required=True, choices=["blue_one", "blue_two", "red_one", "red_two"], help="Specify the boat id.")
     parser.add_argument('--boat_name', required=False, choices=['s', 't', 'u', 'v', 'w', 'x', 'y', 'z'], help="Specify the boat name.")
     parser.add_argument('--num-players', required=True, type=int, help="Specify the number of players on each team.")
- 
+    parser.add_argument('--timewarp', required=True, type=int, default=4, help='Specify the timewarp.')
     args = parser.parse_args()
 
-    if args.sim == 'True':
+    if args.sim:
         print("Simulation mode")
         server = "localhost"
     else:
@@ -49,7 +50,7 @@ if __name__ == "__main__":
     print(f"Opponents: {opponents}")
 
     watcher = PyQuaticusMoosBridge(server, args.boat_id, boat_ports[args.boat_id],
-                      teammates, opponents, moos_config=WestPointConfig(), 
+                      teammates, opponents, moos_config=WestPointConfig(), timewarp=args.timewarp,
                       quiet=False)
 
 

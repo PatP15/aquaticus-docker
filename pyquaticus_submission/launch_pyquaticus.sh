@@ -113,4 +113,4 @@ sleep 3
 #-------------------------------------------------------
 cd ../../pyquaticus_submission
 echo "Running pyquaticus_moos_bridge.py"
-python3 pyquaticus_moos_bridge.py --sim $SIMULATION --color $COLOR --policy-dir $POLICY_DIR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME
+python3 run_pyquaticus_moos_bridge.py $([ "$SIMULATION" == "true" ] && echo "--sim") --color $COLOR --policy-dir $POLICY_DIR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP

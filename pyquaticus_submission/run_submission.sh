@@ -3,7 +3,6 @@
 # Prompt the user for each variable
 read -p "Enter boat name (e.g., u, v, s, t): " BOAT_NAME
 read -p "Enter boat role (e.g., red_one, blue_one, red_two, blue_two): " BOAT_ROLE
-echo $BOAT_ROLE
 read -p "Enter log path: " LOGPATH
 read -p "Enter time warp (default 4): " TIME_WARP
 read -p "Enter policy directory (default will be ./policies/\$BOAT_NAME/): " POLICY_DIR
