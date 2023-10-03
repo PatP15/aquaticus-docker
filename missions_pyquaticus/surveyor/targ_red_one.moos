@@ -2,7 +2,7 @@ ServerHost = localhost
 ServerPort = 9011
 Community  = red_one
 
-MOOSTimeWarp = 4
+MOOSTimeWarp = 1
 
 //Lake Popolopen
 LatOrigin  = 41.34928
@@ -96,7 +96,7 @@ ProcessConfig = pLogger
   CommsTick   = 10
 
   File    = C000_LOG_URSULA_RED_ONE
-  PATH    = ../logs
+  PATH    = ./logs
   SyncLog   = true @ 0.2
   AsyncLog   = true
   FileTimeStamp = true
@@ -187,7 +187,7 @@ ProcessConfig = uFldNodeBroker
   AppTick   = 1
   CommsTick = 1
 
-  TRY_SHORE_HOST = pshare_route=192.168.1.252:9300
+  TRY_SHORE_HOST = pshare_route=localhost:9300
 
 
   BRIDGE = src=VIEW_POLYGON

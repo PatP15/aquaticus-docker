@@ -24,11 +24,10 @@ RUN git clone https://github.com/mit-ll-trusted-autonomy/pyquaticus.git
 COPY moos-ivp-rlagent moos-ivp-rlagent
 COPY scripts scripts
 COPY gym-aquaticus gym-aquaticus
-COPY logs logs
 COPY missions_pyquaticus missions_pyquaticus
 COPY requirements.txt requirements.txt
-
-RUN sudo chown -R moos:moos moos-ivp-rlagent logs pyquaticus moos-ivp missions_pyquaticus scripts missions_pyquaticus requirements.txt mdo-hurt-s submission
+RUN mkdir pyquaticus_submission
+RUN sudo chown -R moos:moos moos-ivp-rlagent pyquaticus moos-ivp missions_pyquaticus scripts missions_pyquaticus requirements.txt mdo-hurt-s pyquaticus_submission
 
 ENV PATH=${PATH}:/home/moos/moos-ivp/bin:/home/moos/moos-ivp-aquaticus/bin:/home/moos/moos-ivp-rlagent/bin:/home/moos/pyquaticus/:/home/moos/scripts:/home/moos/mdo-hurt-s/moos-ivp-surveyor/bin \
 IVP_BEHAVIOR_DIRS=/home/moos/moos-ivp/lib:/home/moos/moos-ivp-aquaticus/lib:/home/moos/moos-ivp-rlagent/lib \
@@ -55,8 +54,6 @@ RUN cd mdo-hurt-s/moos-ivp-surveyor && ./build.sh && cd
 # These need to be installed separately in this order due to version conflicts
 RUN pip install ray[rllib]==2.4.0
 RUN pip install gymnasium==0.28.1
-
-ENTRYPOINT ["/bin/bash/", "-c", "python3 ~/moos-ivp-rlagent/missions/oct_wp_competition-2022/pyquaticus_bridge_test.py"]
 
 
 

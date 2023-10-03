@@ -96,7 +96,7 @@ ProcessConfig = pLogger
   CommsTick   = 10
 
   File    = C000_LOG_URSULA_BLUE_ONE
-  PATH    = ../logs
+  PATH    = ./logs/
   SyncLog   = true @ 0.2
   AsyncLog   = true
   FileTimeStamp = true
