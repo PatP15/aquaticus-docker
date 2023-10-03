@@ -60,8 +60,8 @@ ENV_NAME="$DEPS/pyquaticus/env-full"
 conda activate $ENV_NAME
 
 # set environment variables for MOOS
-conda env config vars set PATH=${PATH}:$DEPS/moos-ivp/bin:$DEPS/moos-ivp-aquaticus/bin:$DEPS/moos-ivp-rlagent/bin:$DEPS/pyquaticus/:$DEPS/scripts:$DEPS/mdo-hurt-s/moos-ivp-surveyor/bin \
-conda env config vars set IVP_BEHAVIOR_DIRS=$DEPS/moos-ivp/lib:$DEPS/moos-ivp-aquaticus/lib:$DEPS/moos-ivp-rlagent/lib \
+conda env config vars set PATH=${PATH}:$DEPS/moos-ivp/bin:$DEPS/moos-ivp-aquaticus/bin:$REPODIR/moos-ivp-rlagent/bin:$DEPS/pyquaticus/:$DEPS/scripts:$DEPS/mdo-hurt-s/moos-ivp-surveyor/bin \
+conda env config vars set IVP_BEHAVIOR_DIRS=$DEPS/moos-ivp/lib:$DEPS/moos-ivp-aquaticus/lib:$REPODIR/moos-ivp-rlagent/lib \
 conda env config vars set SCRIPTS=$REPODIR/scripts
 conda env config vars set MOOSIVP_SOURCE_TREE_BASE=$DEPS/moos-ivp/
 
