@@ -1,6 +1,10 @@
 #!/bin/bash
-TIME_WARP=4
 
+# To run just launch_pyquatcius use:
+# ./launch_pyquaticus.sh --boat-name u --boat-role blue_one --logpath=./logs/ --time-warp 4 --policy-dir ./policies/u/ --num-players 2 --sim
+
+
+TIME_WARP=4
 CMD_ARGS=""
 NO_HERON=""
 LOGPATH=""
@@ -13,10 +17,6 @@ for ARGI; do
     case "$ARGI" in
         -h|--help)
             HELP="yes"
-            ;;
-        -p|--policy-dir)
-            # shift
-            POLICY_DIR="$1"
             ;;
         -n|--num-players)
             # shift
@@ -64,7 +64,6 @@ done
 
 echo ""
 echo "Logpath: ${LOGPATH}"
-echo "Policy dir: ${POLICY_DIR}"
 echo "Num players: ${NUM_PLAYERS}"
 echo "Boat name: ${BOAT_NAME}"
 echo "Boat role: ${BOAT_ROLE}"
@@ -113,4 +112,7 @@ sleep 3
 #-------------------------------------------------------
 cd ../../pyquaticus_submission
 echo "Running pyquaticus_moos_bridge.py"
-python3 run_pyquaticus_moos_bridge.py $([ "$SIMULATION" == "true" ] && echo "--sim") --color $COLOR --policy-dir $POLICY_DIR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP
+
+# echo "python3 solution.py $([ "$SIMULATION" == "true" ] && echo "--sim") --color $COLOR --policy-dir $POLICY_DIR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP"
+python3 solution.py $([ "$SIMULATION" == "true" ] && echo "--sim") --color $COLOR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP
+

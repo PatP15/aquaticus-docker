@@ -29,7 +29,6 @@ if __name__ == "__main__":
     # parser.add_argument('--sim', required=True, choices=['true', 'false'], help="Specify if simulation or not.")
     parser.add_argument('--sim', action='store_true', help="Specify if simulation or not.")
     parser.add_argument('--color', required=True, choices=['red', 'blue'], help="Specify if red or blue team is the trained agent.")
-    parser.add_argument('--policy-dir', required=True, help="Directory containing policy file.")
     parser.add_argument('--boat_id', required=True, choices=["blue_one", "blue_two", "red_one", "red_two"], help="Specify the boat id.")
     parser.add_argument('--boat_name', required=False, choices=['s', 't', 'u', 'v', 'w', 'x', 'y', 'z'], help="Specify the boat name.")
     parser.add_argument('--num-players', required=True, type=int, help="Specify the number of players on each team.")
@@ -48,8 +47,11 @@ if __name__ == "__main__":
 
     print(f"Teammates: {teammates}")
     print(f"Opponents: {opponents}")
-
-    watcher = PyQuaticusMoosBridge(server, args.boat_id, boat_ports[args.boat_id],
+    print(f"Connecting to {server}:{boat_ports[args.boat_id]}")
+    print(f"Boat id: {args.boat_id}")
+    print(f"Boat name: {args.boat_name}")
+    print(f"Num players: {args.num_players}")
+    env = PyQuaticusMoosBridge(server, args.boat_id, boat_ports[args.boat_id],
                       teammates, opponents, moos_config=WestPointConfig(), timewarp=args.timewarp,
                       quiet=False)
 
@@ -59,14 +61,19 @@ if __name__ == "__main__":
 
     # Catch Ctrl-C
 
+
+    # Write here a function that we can call to pass the actions into the watcher
+    # def run_moos_agent(policy):
+        
+    #policy(obs) -> action
     try:
-        obs = watcher.reset()
-        action_space = watcher.action_space
+        obs = env.reset()
+        action_space = env.action_space
         while True:
             # action = policy.compute_single_action(obs[args.boat_id])[0]
-            obs, _, _, _, _ = watcher.step(action_space.sample())
+            obs, _, _, _, _ = env.step(action_space.sample())
         print("Finished loop")
 
     finally:
         print("Interrupted by user")
-        watcher.close()
+        env.close()
