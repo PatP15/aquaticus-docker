@@ -70,15 +70,15 @@ conda deactivate
 eval "$(conda shell.bash hook)"
 conda activate $ENV_NAME
 
-echo "########################################## Building MOOS-IvP #################################################"
+echo "########################################## Building MOOS-IvP ##################################################"
 cd ../moos-ivp
 ./build.sh
 
-echo "########################################## Building MOOS-IvP Aquaticus #################################################"
+echo "##################################### Building MOOS-IvP Aquaticus #############################################"
 cd ../moos-ivp-aquaticus
 ./build.sh
 
-echo "########################################## Building MOOS-IvP RL Agent#################################################"
+echo "###################################### Building MOOS-IvP RL Agent #############################################"
 cd ../../moos-ivp-rlagent
 ./build.sh
 cd ..
