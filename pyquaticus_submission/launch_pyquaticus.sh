@@ -94,16 +94,16 @@ fi
 if [[ -z $NO_HERON ]]; then
   cd ../missions_pyquaticus/surveyor
   if [ "$BOAT_ROLE" == "blue_one" ]; then
-    ./launch_surveyor.sh $BOAT_NAME b1 b2 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=230 --start-y=78 --start-a=60 --role=CONTROL > /dev/null &
+    ./launch_surveyor.sh $BOAT_NAME b1 b2 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=221.17 --start-y=81.49 --start-a=21.3 --role=CONTROL > /dev/null &
   elif [ "$BOAT_ROLE" == "blue_two" ]; then
-    ./launch_surveyor.sh $BOAT_NAME b2 b1 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=230 --start-y=78 --start-a=60 --role=CONTROL > /dev/null &
+    ./launch_surveyor.sh $BOAT_NAME b2 b1 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=230.49 --start-y=77.85 --start-a=21.3 --role=CONTROL > /dev/null &
   fi
 
   
   if [ "$BOAT_ROLE" == "red_one" ]; then
-    ./launch_surveyor.sh $BOAT_NAME r1 r2 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=230 --start-y=78 --start-a=60 --role=CONTROL > /dev/null &
+    ./launch_surveyor.sh $BOAT_NAME r1 r2 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=250.23 --start-y=156.03 --start-a=201.3 --role=CONTROL > /dev/null &
   elif [ "$BOAT_ROLE" == "red_two" ]; then
-    ./launch_surveyor.sh $BOAT_NAME r2 r1 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=230 --start-y=78 --start-a=60 --role=CONTROL > /dev/null &
+    ./launch_surveyor.sh $BOAT_NAME r2 r1 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=259.55 --start-y=152.39 --start-a=201.3 --role=CONTROL > /dev/null &
   fi
 fi
 sleep 3

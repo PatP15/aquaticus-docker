@@ -3,7 +3,7 @@ import time
 
 
 from pyquaticus.moos.pyquaticus_moos_bridge import PyQuaticusMoosBridge
-from pyquaticus.moos.config import WestPointConfig
+from pyquaticus.moos.config import WestPointConfig, JervisBayConfig
 from ray.rllib.policy.policy import Policy
 boat_ports = {
     'blue_one': 9015,
