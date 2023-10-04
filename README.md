@@ -45,6 +45,9 @@ To run the the entry without entering the docker and only run the `run_submissio
 ./run_docker.sh --host-dir=/path/to/custom/host/directory --name=my_container --setup
 ```
 
+This will run the `./run_submission -i` script. If you want to run it not in interactive, mode you will need to enter the docker and run the script yourself. Refer to the commands on how to enter an exited docker container.
+
+
 **Flags Explanation**:
 - `--host-dir`: The path to the directory on your local computer that contains the `pyquaticus_submission` directory.
 - `--name`: The name of the Docker container you are creating from the base image.
@@ -62,6 +65,8 @@ And to list the docker containers to see your newly created one, you can run the
 ```
 sudo docker ps -a
 ```
+
+### Some Helpful Commands
 If you need to remove that newly created docker container, you can run the following command:
 
 ```
@@ -78,8 +83,8 @@ If you need to enter the docker container to debug, you can run the following co
 # Start the exited container
 docker start team1
 
-# Attach to the running container
-docker attach team1
+# Attach to the running container and run in the interactive mode
+sudo docker exec -it wp /bin/bash
 
 ```
 
