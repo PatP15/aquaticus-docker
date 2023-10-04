@@ -5,7 +5,7 @@ The goal of this repository is to create a standardized docker container that wi
 If you just would like to run your agents in MOOS, you do not need to build the docker. You can follow the steps below to run your submission in MOOS.
 
 ## Docker Installation
-The docker is mainly necessary for running the agents on the boats. There will be a docker image that is built on each robot. The by running the `run_submission.sh` script, a docker container will be created from the docker image and the agents will be run in the MOOS environment. The docker will be built on the robot, so you do not need to build the docker yourself. Your submission will be in the pyquaticus_submission directory which will be mounted in the docker. If you would like to test the docker locally, you can build it yourself by following the steps below.
+The docker is mainly necessary for running the agents on the boats. There will be a docker image that is built on each robot. Then by running the `run_submission.sh` script, a docker container will be created from the docker image and the agents will be run in the MOOS environment. Your submission will be in the pyquaticus_submission directory which will be mounted in the docker, so the only files that need to be copied to the robot are whatever is in the pyquaticus_submission directory. If you would like to test the docker locally, you can build it yourself by following the steps in the Local Installation section.
 
 Below are the commands necessary to set up the docker:
 
@@ -81,10 +81,10 @@ If you need to enter the docker container to debug, you can run the following co
 
 ```
 # Start the exited container
-docker start team1
+sudo docker start team1
 
 # Attach to the running container and run in the interactive mode
-sudo docker exec -it wp /bin/bash
+sudo docker exec -it team1 /bin/bash
 
 ```
 
