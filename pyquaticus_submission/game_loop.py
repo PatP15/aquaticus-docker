@@ -67,9 +67,9 @@ if __name__ == "__main__":
         action_space = env.action_space
         while True:
             #Get action from learned policy
-            #action = sol.compute_action(0 if "one" in args.boat_id else 1, obs)[0]
-            # action = policy.compute_single_action(obs[args.boat_id])[0]
-            obs, _, _, _, _ = env.step(action_space.sample())
+            agent_id = 0 if "one" in args.boat_id else 1
+            action = sol.compute_action(agent_id, obs[agent_id])[0]
+            obs, _, _, _, _ = env.step(action)
         print("Finished loop")
 
     finally:
