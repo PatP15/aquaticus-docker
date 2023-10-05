@@ -1,4 +1,3 @@
-import gymnasium as gym
 import numpy as np
 import os
 from ray.rllib.policy.policy import Policy
@@ -12,7 +11,7 @@ from ray.rllib.policy.policy import Policy
 class solution:
 	#Add Variables required for solution
 	
-    def __init__(self, team):
+    def __init__(self):
 		#Load in policy or anything else you want to load/do here
         #NOTE: You can only load from files that are in the same directory as the solution.py or a subdirectory
         
