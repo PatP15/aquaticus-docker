@@ -61,7 +61,7 @@ if __name__ == "__main__":
     # Write here a function that we can call to pass the actions into the watcher
     # def run_moos_agent(policy):
     #policy(obs) -> action
-
+    sol = solution()
     try:
         obs = env.reset()
         action_space = env.action_space
