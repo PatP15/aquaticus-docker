@@ -24,7 +24,7 @@ if $HELP; then
     echo "  -h               Show this help message and exit."
     echo "  --boat-name=NAME Specify the boat name (e.g., u, v, s, t)."
     echo "  --boat-role=ROLE Specify the boat role (e.g., red_one, blue_one, red_two, blue_two)."
-    echo "  --logpath=PATH   Specify the log path (default is ./logs/)."
+    echo "  --logpath=PATH   Specify the log path relative to this directory (default is ./logs/)."
     echo "  --time-warp=WARP Specify the time warp (default is 4)."
     echo "  --num-players=NUM Specify the number of players per team (default is 2)."
     echo "  --sim            Indicate that this is a simulation."
@@ -75,4 +75,4 @@ TIME_WARP=${TIME_WARP:-4}
 NUM_PLAYERS=${NUM_PLAYERS:-2}
 LOGPATH=${LOGPATH:-./logs/}
 # Run your command using the provided values
-./launch_pyquaticus.sh --boat-name $BOAT_NAME --boat-role $BOAT_ROLE --logpath=$LOGPATH --time-warp $TIME_WARP  --num-players $NUM_PLAYERS --sim $SIMULATION
+./launch_pyquaticus.sh --boat-name $BOAT_NAME --boat-role $BOAT_ROLE --logpath=./../../pyquaticus_submission/$LOGPATH --time-warp $TIME_WARP  --num-players $NUM_PLAYERS --sim $SIMULATION
