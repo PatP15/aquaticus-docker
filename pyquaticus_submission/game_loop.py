@@ -63,13 +63,19 @@ if __name__ == "__main__":
     #policy(obs) -> action
     sol = solution()
     try:
-        obs = env.reset()
+        agent_id = 0 if "one" in args.boat_id else 1
+        obs_norm = env.reset()
+        env.normalize = False
+        obs = env.state_to_obs(args.boat_id)
+        env.normalize = True
         action_space = env.action_space
         while True:
             #Get action from learned policy
-            agent_id = 0 if "one" in args.boat_id else 1
-            action = sol.compute_action(agent_id, obs[agent_id])[0]
-            obs, _, _, _, _ = env.step(action)
+            action = sol.compute_action(agent_id, obs_norm, obs)
+            obs_norm, _, _, _, _ = env.step(action)
+            env.normalize = False
+            obs = env.state_to_obs(args.boat_id)
+            env.normalize = True
         print("Finished loop")
 
     finally:
