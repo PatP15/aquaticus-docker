@@ -1,79 +1,29 @@
-import argparse
-import time
-
-
-from pyquaticus.moos.pyquaticus_moos_bridge import PyQuaticusMoosBridge
-from pyquaticus.moos.config import WestPointConfig, JervisBayConfig
+import numpy as np
+import os
 from ray.rllib.policy.policy import Policy
-boat_ports = {
-    'blue_one': 9015,
-    'blue_two': 9016,
-    'red_one': 9011,
-    'red_two': 9012
-}
-
-boat_ips = {
-    's': "192.168.1.12",
-    't': "192.168.1.22",
-    'u': "192.168.1.32",
-    'v': "192.168.1.42",
-    'w': "192.168.1.52",
-    'x': "192.168.1.62",
-    'y': "192.168.1.72",
-    'z': "192.168.1.82"
-}
-
-if __name__ == "__main__":
-
-    parser = argparse.ArgumentParser(description="Run the simulation with trained agents.")
-    # parser.add_argument('--sim', required=True, choices=['true', 'false'], help="Specify if simulation or not.")
-    parser.add_argument('--sim', action='store_true', help="Specify if simulation or not.")
-    parser.add_argument('--color', required=True, choices=['red', 'blue'], help="Specify if red or blue team is the trained agent.")
-    parser.add_argument('--boat_id', required=True, choices=["blue_one", "blue_two", "red_one", "red_two"], help="Specify the boat id.")
-    parser.add_argument('--boat_name', required=False, choices=['s', 't', 'u', 'v', 'w', 'x', 'y', 'z'], help="Specify the boat name.")
-    parser.add_argument('--num-players', required=True, type=int, help="Specify the number of players on each team.")
-    parser.add_argument('--timewarp', required=True, type=int, default=4, help='Specify the timewarp.')
-    args = parser.parse_args()
-
-    if args.sim:
-        print("Simulation mode")
-        server = "localhost"
-    else:
-        server = boat_ips[args.boat_name]
-    
-    boat_ids = list(boat_ports.keys())
-    teammates = [bid for bid in boat_ids if bid.startswith(args.color) and bid != args.boat_id][:args.num_players-1]  # Exclude the specified boat_id and limit to num_players
-    opponents = [bid for bid in boat_ids if not bid.startswith(args.color)][:args.num_players]
-
-    print(f"Teammates: {teammates}")
-    print(f"Opponents: {opponents}")
-    print(f"Connecting to {server}:{boat_ports[args.boat_id]}")
-    print(f"Boat id: {args.boat_id}")
-    print(f"Boat name: {args.boat_name}")
-    print(f"Num players: {args.num_players}")
-    env = PyQuaticusMoosBridge(server, args.boat_id, boat_ports[args.boat_id],
-                      teammates, opponents, moos_config=WestPointConfig(), timewarp=args.timewarp,
-                      quiet=False)
+#Need an added import for codalab competition submission?
+#Post an issue to the github and we will work to get it added into the system!
 
 
-    # Use the `from_checkpoint` utility of the Policy class:
-    # policy = Policy.from_checkpoint(args.policy_dir)
+#YOUR CODE HERE
 
-    # Catch Ctrl-C
-
-
-    # Write here a function that we can call to pass the actions into the watcher
-    # def run_moos_agent(policy):
+#Load in your trained model and return the corresponding agent action based on the information provided in step()
+class solution:
+	#Add Variables required for solution
+	
+    def __init__(self):
+		#Load in policy or anything else you want to load/do here
+        #NOTE: You can only load from files that are in the same directory as the solution.py or a subdirectory
         
-    #policy(obs) -> action
-    try:
-        obs = env.reset()
-        action_space = env.action_space
-        while True:
-            # action = policy.compute_single_action(obs[args.boat_id])[0]
-            obs, _, _, _, _ = env.step(action_space.sample())
-        print("Finished loop")
+        #Load in learned policies see examples below:
+        self.policy_one = Policy.from_checkpoint(os.path.dirname(os.path.realpath(__file__))+ '/checkpoint_000006/policies/agent-0-policy/')
+        self.policy_two = Policy.from_checkpoint(os.path.dirname(os.path.realpath(__file__))+ '/checkpoint_000006/policies/agent-1-policy/')
 
-    finally:
-        print("Interrupted by user")
-        env.close()
+	#Given an observation return a valid action agent_id is agent that needs an action, observation space is the current normalized observation space for the specific agent
+    def compute_action(self,agent_id:int, observation_normalized:list, observation:dict):
+        if agent_id == 0 or agent_id == 2:
+            return self.policy_one.compute_single_action(observation_normalized)[0]
+        else:
+            return self.policy_two.compute_single_action(observation_normalized)[0]
+
+#END OF CODE SECTION
