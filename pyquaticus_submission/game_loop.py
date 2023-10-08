@@ -53,7 +53,7 @@ if __name__ == "__main__":
     print(f"Boat name: {args.boat_name}")
     print(f"Num players: {args.num_players}")
     env = PyQuaticusMoosBridge(server, args.boat_id, boat_ports[args.boat_id],
-                      teammates, opponents, moos_config=WestPointConfig(), timewarp=args.timewarp,
+                      teammates, opponents, moos_config=JervisBayConfig(), timewarp=args.timewarp,
                       quiet=False)
 
     # Catch Ctrl-C
@@ -61,23 +61,40 @@ if __name__ == "__main__":
     # Write here a function that we can call to pass the actions into the watcher
     # def run_moos_agent(policy):
     #policy(obs) -> action
-    sol = solution()
+
+    # Below is code that will run the simulation with random actions
     try:
-        agent_id = 0 if "one" in args.boat_id else 1
         obs_norm = env.reset()
-        env.normalize = False
-        obs = env.state_to_obs(args.boat_id)
-        env.normalize = True
         action_space = env.action_space
         while True:
             #Get action from learned policy
-            action = sol.compute_action(agent_id, obs_norm, obs)
+            action = action_space.sample()
             obs_norm, _, _, _, _ = env.step(action)
-            env.normalize = False
-            obs = env.state_to_obs(args.boat_id)
-            env.normalize = True
+            print(action)
         print("Finished loop")
 
     finally:
         print("Interrupted by user")
         env.close()
+
+    # Example of how to run the simulation with a 2v2 multi-agent policy
+    # sol = solution()
+    # try:
+    #     agent_id = 0 if "one" in args.boat_id else 1
+    #     obs_norm = env.reset()
+    #     env.normalize = False
+    #     obs = env.state_to_obs(args.boat_id)
+    #     env.normalize = True
+    #     action_space = env.action_space
+    #     while True:
+    #         #Get action from learned policy
+    #         action = sol.compute_action(agent_id, obs_norm, obs)
+    #         obs_norm, _, _, _, _ = env.step(action)
+    #         env.normalize = False
+    #         obs = env.state_to_obs(args.boat_id)
+    #         env.normalize = True
+    #     print("Finished loop")
+
+    # finally:
+    #     print("Interrupted by user")
+    #     env.close()
