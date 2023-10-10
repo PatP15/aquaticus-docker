@@ -23,7 +23,7 @@ Once it is built, there is a directory in the docker called pyquaticus_submissio
 
 ```
 # Enters the docker and mounts a volume to the logs directory on the host computer
-sudo docker run -it -v ./pyquaticus_submission:/home/moos/pyquaticus_submission --net host --entrypoint /bin/bash --name debug pyquaticus:test 
+sudo docker run -it -v ./pyquaticus_submission:/home/moos/pyquaticus_submission --net host --entrypoint /bin/bash --name debug pyquaticus:base 
 ```
 
 Ensure you update the path `./pyquaticus_submission` to match the actual directory path on your local computer. By doing this, you'll mount the directory to Docker, which will:
