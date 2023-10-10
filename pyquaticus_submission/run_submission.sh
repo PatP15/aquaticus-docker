@@ -71,7 +71,7 @@ else
 fi
 
 # Default values if the user left any field blank or didn't provide them as arguments
-TIME_WARP=${TIME_WARP:-1}
+TIME_WARP=${TIME_WARP:-4}
 NUM_PLAYERS=${NUM_PLAYERS:-2}
 LOGPATH=${LOGPATH:-./logs/}
 
