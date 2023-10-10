@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Image name
-IMAGE_NAME="pyquaticus:test" # Replace with your Docker image name (this should be the base image that all the containers are made from)
+IMAGE_NAME="pyquaticus:base" # Replace with your Docker image name (this should be the base image that all the containers are made from)
 
 # Default directories and command
 DEFAULT_HOST_DIR="./pyquaticus_submission"

@@ -53,7 +53,7 @@ if __name__ == "__main__":
     print(f"Boat name: {args.boat_name}")
     print(f"Num players: {args.num_players}")
     env = PyQuaticusMoosBridge(server, args.boat_id, boat_ports[args.boat_id],
-                      teammates, opponents, moos_config=WestPointConfig(), timewarp=args.timewarp,
+                      teammates, opponents, moos_config=JervisBayConfig(), timewarp=args.timewarp,
                       quiet=False)
 
     # Catch Ctrl-C
