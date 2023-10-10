@@ -10,6 +10,11 @@ NO_HERON=""
 LOGPATH=""
 COLOR=""
 
+CORNER_1="194.76,75.68"
+CORNER_2="234.72,178.16"
+CORNER_3="285.96,157.88"
+CORNER_4="246.00,55.70"
+
 #-------------------------------------------------------
 #  Part 1: Check for and handle command-line arguments
 #-------------------------------------------------------
@@ -91,28 +96,32 @@ fi
 #-------------------------------------------------------
 #  Part 2: Launching herons
 #-------------------------------------------------------
+current_path=$(pwd)
+
+mkdir $current_path/$LOGPATH
+
 if [[ -z $NO_HERON ]]; then
-  cd ../missions_pyquaticus/surveyor
+  cd ../moos-ivp-aquaticus/missions/jervis-2023/surveyor/
   if [ "$BOAT_ROLE" == "blue_one" ]; then
-    ./launch_surveyor.sh $BOAT_NAME b1 b2 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=221.17 --start-y=81.49 --start-a=21.3 --role=CONTROL > /dev/null &
+    ./launch_surveyor.sh -v$BOAT_NAME -b1 $TIME_WARP --logpath=$current_path/$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start=100,81.49,21.3 --role=CONTROL > /dev/null &
   elif [ "$BOAT_ROLE" == "blue_two" ]; then
-    ./launch_surveyor.sh $BOAT_NAME b2 b1 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=230.49 --start-y=77.85 --start-a=21.3 --role=CONTROL > /dev/null &
+    ./launch_surveyor.sh -v$BOAT_NAME -b2 $TIME_WARP --logpath=$current_path/$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start=100,77.85,21.3 --role=CONTROL > /dev/null &
   fi
 
-  
   if [ "$BOAT_ROLE" == "red_one" ]; then
-    ./launch_surveyor.sh $BOAT_NAME r1 r2 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=250.23 --start-y=156.03 --start-a=201.3 --role=CONTROL > /dev/null &
+    ./launch_surveyor.sh -v$BOAT_NAME -r1 $TIME_WARP --logpath=$current_path/$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start=70,156.03,201.3 --role=CONTROL > /dev/null &
   elif [ "$BOAT_ROLE" == "red_two" ]; then
-    ./launch_surveyor.sh $BOAT_NAME r2 r1 $TIME_WARP --logpath=$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start-x=259.55 --start-y=152.39 --start-a=201.3 --role=CONTROL > /dev/null &
+    ./launch_surveyor.sh -v$BOAT_NAME -r2 $TIME_WARP --logpath=$current_path/$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start=70,152.39,201.3 --role=CONTROL > /dev/null &
   fi
 fi
 sleep 3
+
+cd $current_path
 #-------------------------------------------------------
 #  Part 3: Launch the python script
 #-------------------------------------------------------
-cd ../../pyquaticus_submission
+
 echo "Running pyquaticus_moos_bridge.py"
 
 # echo "python3 solution.py $([ "$SIMULATION" == "true" ] && echo "--sim") --color $COLOR --policy-dir $POLICY_DIR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP"
 python3 game_loop.py $([ "$SIMULATION" == "true" ] && echo "--sim") --color $COLOR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP
-
