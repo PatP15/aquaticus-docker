@@ -98,7 +98,7 @@ fi
 #-------------------------------------------------------
 current_path=$(pwd)
 
-mkdir $current_path/$LOGPATH
+mkdir -p $current_path/$LOGPATH
 
 if [[ -z $NO_HERON ]]; then
   cd ../moos-ivp-aquaticus/missions/jervis-2023/surveyor/
