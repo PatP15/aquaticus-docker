@@ -67,7 +67,7 @@ conda env config vars set MOOSIVP_SOURCE_TREE_BASE=$DEPS/moos-ivp/
 
 # Deactivate and reactivate for changes to take effect
 conda deactivate
-$REPODIR/start-env.sh
+source $REPODIR/start-env.sh
 
 echo "########################################## Building MOOS-IvP ##################################################"
 cd ../moos-ivp
