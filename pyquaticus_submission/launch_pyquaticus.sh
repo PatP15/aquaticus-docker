@@ -2,18 +2,23 @@
 
 # To run just launch_pyquatcius use:
 # ./launch_pyquaticus.sh --boat-name u --boat-role blue_one --logpath=./logs/ --time-warp 4 --policy-dir ./policies/u/ --num-players 2 --sim
+# if not running in simulation, also pass --shore-ip <ip address> and --host-op <ip address>
 
+THISDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+SHORE_IP="localhost"
+HOST_IP="localhost"
+
+# Typical format for SHORE/HOST IP
+# SHORE_IP="192.168.1.111"
+# HOST_IP="192.168.1.42" # where boat number is 4 (the last 4) and 2 means backseat computer
 
 TIME_WARP=4
 CMD_ARGS=""
 NO_HERON=""
 LOGPATH=""
 COLOR=""
-
-CORNER_1="194.76,75.68"
-CORNER_2="234.72,178.16"
-CORNER_3="285.96,157.88"
-CORNER_4="246.00,55.70"
+SIMULATION=""
 
 #-------------------------------------------------------
 #  Part 1: Check for and handle command-line arguments
@@ -41,7 +46,7 @@ for ARGI; do
             fi
             ;;
         -s|--sim)
-            SIMULATION="true"
+            SIMULATION="--sim"
             ;;
         -r|--boat-role)
             if [[ "red_one blue_one red_two blue_two" =~ "$1" ]]; then
@@ -60,6 +65,12 @@ for ARGI; do
         -t|--time-warp)
             TIME_WARP="$1"
             ;;
+	--shore-ip)
+	    SHORE_IP="$1"
+	    ;;
+	--host-ip)
+	    HOST_IP="$1"
+	    ;;
         *)
             CMD_ARGS="$CMD_ARGS $ARGI"
             ;;
@@ -74,6 +85,8 @@ echo "Boat name: ${BOAT_NAME}"
 echo "Boat role: ${BOAT_ROLE}"
 echo "Time warp: ${TIME_WARP}"
 echo "Simulation: ${SIMULATION}"
+echo "Shore IP: ${SHORE_IP}"
+echo "Host IP: ${HOST_IP}"
 echo "Color: ${COLOR}"
 echo ""
 
@@ -87,9 +100,16 @@ if [ "${HELP}" = "yes" ]; then
   echo "  -l, --logpath=PATH      : Specify the log path."
   echo "  -b, --boat-name NAME    : Specify the boat name (e.g., u, v, s, t)."
   echo "  -s, --sim               : Launch in simulation mode."
+  echo "  --shore-ip IP           : Provide the shore IP address if not running in simulation mode."
+  echo "  --host-ip IP            : Provide the host IP address if not running in simulation mode."
   echo "  -r, --boat-role ROLE    : Specify the boat role (e.g., red_one, blue_one, red_two, blue_two). Color is derived from the role."
   echo "  -h, --help              : Display this help and exit."
   exit 0;
+fi
+
+if [[ "$SIMULATION" == "" && ("${SHORE_IP}" == "localhost" || "${HOST_IP}" == "localhost") ]]; then
+  echo "Must provide both shore IP and host IP if not running in simulation mode."
+  exit 1
 fi
 
 
@@ -103,15 +123,19 @@ mkdir $current_path/$LOGPATH
 if [[ -z $NO_HERON ]]; then
   cd ../moos-ivp-aquaticus/missions/jervis-2023/surveyor/
   if [ "$BOAT_ROLE" == "blue_one" ]; then
-    ./launch_surveyor.sh -v$BOAT_NAME -b1 $TIME_WARP --logpath=$current_path/$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start=100,81.49,21.3 --role=CONTROL > /dev/null &
+    # New
+    ./launch_surveyor.sh -v$BOAT_NAME -b1 $TIME_WARP --logpath=$current_path/$LOGPATH $SIMULATION --start=100,81.49,21.3 --role=CONTROL --shore=$SHORE_IP --ip=$HOST_IP > /dev/null &
   elif [ "$BOAT_ROLE" == "blue_two" ]; then
-    ./launch_surveyor.sh -v$BOAT_NAME -b2 $TIME_WARP --logpath=$current_path/$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start=100,77.85,21.3 --role=CONTROL > /dev/null &
+    # New
+    ./launch_surveyor.sh -v$BOAT_NAME -b2 $TIME_WARP --logpath=$current_path/$LOGPATH $SIMULATION --start=100,77.85,21.3 --role=CONTROL --shore=$SHORE_IP --ip=$HOST_IP > /dev/null &
   fi
 
   if [ "$BOAT_ROLE" == "red_one" ]; then
-    ./launch_surveyor.sh -v$BOAT_NAME -r1 $TIME_WARP --logpath=$current_path/$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start=70,156.03,201.3 --role=CONTROL > /dev/null &
+    # New
+    ./launch_surveyor.sh -v$BOAT_NAME -r1 $TIME_WARP --logpath=$current_path/$LOGPATH $SIMULATION --start=70,156.03,201.3 --role=CONTROL --shore=$SHORE_IP --ip=$HOST_IP > /dev/null &
   elif [ "$BOAT_ROLE" == "red_two" ]; then
-    ./launch_surveyor.sh -v$BOAT_NAME -r2 $TIME_WARP --logpath=$current_path/$LOGPATH $([ "$SIMULATION" == "true" ] && echo "--sim") --start=70,152.39,201.3 --role=CONTROL > /dev/null &
+      # New
+    ./launch_surveyor.sh -v$BOAT_NAME -r2 $TIME_WARP --logpath=$current_path/$LOGPATH $SIMULATION --start=70,152.39,201.3 --role=CONTROL --shore=$SHORE_IP --ip=$HOST_IP > /dev/null &
   fi
 fi
 sleep 3
@@ -124,4 +148,4 @@ cd $current_path
 echo "Running pyquaticus_moos_bridge.py"
 
 # echo "python3 solution.py $([ "$SIMULATION" == "true" ] && echo "--sim") --color $COLOR --policy-dir $POLICY_DIR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP"
-python3 game_loop.py $([ "$SIMULATION" == "true" ] && echo "--sim") --color $COLOR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP
+python3 game_loop.py $SIMULATION --color $COLOR --boat_id $BOAT_ROLE --num-players $NUM_PLAYERS --boat_name $BOAT_NAME --timewarp $TIME_WARP

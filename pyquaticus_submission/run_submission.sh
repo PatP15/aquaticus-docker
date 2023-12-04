@@ -76,4 +76,4 @@ NUM_PLAYERS=${NUM_PLAYERS:-2}
 LOGPATH=${LOGPATH:-./logs/}
 
 # Run your command using the provided values
-./launch_pyquaticus.sh --boat-name $BOAT_NAME --boat-role $BOAT_ROLE --logpath=$LOGPATH --time-warp $TIME_WARP  --num-players $NUM_PLAYERS --sim $SIMULATION
+./launch_pyquaticus.sh --boat-name $BOAT_NAME --boat-role $BOAT_ROLE --logpath=$LOGPATH --time-warp $TIME_WARP  --num-players $NUM_PLAYERS $([ "$SIMULATION" == "true" ] && echo "--sim")
